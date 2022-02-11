@@ -10,7 +10,11 @@ MANDIR ?= $(PREFIX)/share/man/man1
 # see http://lv2plug.in/pages/filesystem-hierarchy-standard.html, don't use libdir
 LV2DIR ?= $(PREFIX)/lib/lv2
 
+ifeq ($(shell uname -m),aarch64)
+OPTIMIZATIONS ?= -O3 -ffast-math -fomit-frame-pointer -fno-finite-math-only -DNDEBUG
+else
 OPTIMIZATIONS ?= -msse -msse2 -mfpmath=sse -ffast-math -fomit-frame-pointer -O3 -fno-finite-math-only -DNDEBUG
+endif
 CXXFLAGS ?= -Wall -g -Wno-unused-function
 
 PKG_CONFIG?=pkg-config
